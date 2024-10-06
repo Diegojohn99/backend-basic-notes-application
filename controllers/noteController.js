@@ -20,3 +20,26 @@ exports.deleteNote = async (req, res) => {
   await Note.findByIdAndDelete(id);
   res.status(204).end();
 };
+
+//editar una nota
+exports.updateNote = async (req,res) =>{
+  try{
+    const { id } = req.params;
+    const { title, content } = req.body;
+
+    //Encuentra y actualiza la nota
+    const updateNote = await Note.findByIdAndUpdate(
+      id,
+      { title, content },
+      {new: true } //devuelve la nueva version de la nota
+    );
+
+    if(!updateNote){
+      return res.status(404).json({ message: `Nota no encontrada`})
+    }
+
+    res.status(200).json(updateNote);
+  } catch(error){
+    res.status(500).json({message: `Error al actualizar la nota`})
+  }
+};

@@ -1,5 +1,5 @@
 const express = require('express');
-const { createNote, getNotes, deleteNote } = require('../controllers/noteController');
+const { createNote, getNotes, deleteNote, updateNote } = require('../controllers/noteController');
 
 const router = express.Router();
 
@@ -8,8 +8,9 @@ router.route('/')
   .get(getNotes)
   .post(createNote);
 
-// Ruta para eliminar una nota por ID
+// Ruta para eliminar y editar una nota por ID
 router.route('/:id')
-  .delete(deleteNote);
+  .delete(deleteNote)
+  .put(updateNote);
 
 module.exports = router;
